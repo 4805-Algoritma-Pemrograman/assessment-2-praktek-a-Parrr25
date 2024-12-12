@@ -3,12 +3,12 @@ import java.util.Scanner;
 public class Nomor1 {
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Masukkan bilangan n: ");
-        int N = input.nextInt();
-        
-        tampilkanAngkaGanjil(N);
-        
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.print("Masukkan bilangan n: ");
+            int N = input.nextInt();
+            
+            tampilkanAngkaGanjil(N);
+        }
         System.out.println(Nomor1.class.getDeclaredMethods().length); 
     }
 
