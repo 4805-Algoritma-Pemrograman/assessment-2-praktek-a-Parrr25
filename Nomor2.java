@@ -2,59 +2,55 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nomor2 {
-    private static final int[] hargaMenu = {35000, 45000, 20000, 15000};
-    private static final String[] namaMenu = {"Burger", "Steak", "Spaghetti", "French fries"};
-    private static ArrayList<Integer> keranjangBelanja = new ArrayList<>();
+
+    private static final int[] HARGA_MENU = {35000, 45000, 20000, 15000};
+    private static final String[] NAMA_MENU = {"Burger", "Steak", "Spaghetti", "Kentang"};
+    private static ArrayList<Integer> KERANJANG_BELANJA = new ArrayList<>();
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        String pilihan;
-
+        Scanner inputScanner = new Scanner(System.in);
+        String pilihan = ""; 
         do {
-            System.out.print("Masukkan nama menu: ");
-            String menu = input.nextLine();
+            System.out.print("Masukkan nama menu [Burger/Steak/Spaghetti/Kentang]:");
+            String menuInput = inputScanner.nextLine().toLowerCase();
 
-            int harga = 0;
-            switch (menu.toLowerCase()) {
-                case "burger":
-                    harga = hargaMenu[0];
+            int hargaItem = -1; 
+
+            for (int i = 0; i < NAMA_MENU.length; i++) {
+                if (menuInput.equals(NAMA_MENU[i].toLowerCase())) {
+                    hargaItem = HARGA_MENU[i];
                     break;
-                case "steak":
-                    harga = hargaMenu[1];
-                    break;
-                case "spaghetti":
-                    harga = hargaMenu[2];
-                    break;
-                case "french fries":
-                    harga = hargaMenu[3];
-                    break;
-                default:
-                    System.out.println("Menu tidak tersedia.");
-                    continue; 
+                }
             }
 
-            keranjangBelanja.add(harga);
+            // Jika menu tidak valid
+            if (hargaItem == -1) {
+                System.out.println("Menu tidak tersedia.");
+                continue; // Lanjutkan ke iterasi berikutnya
+            }
 
-            System.out.print("Input lagi (Y/N)?: ");
-            pilihan = input.nextLine();
-        } while (pilihan.equalsIgnoreCase("Y"));
+            KERANJANG_BELANJA.add(hargaItem);
+
+            System.out.print("Input lagi (Y/N)? ");
+            pilihan = inputScanner.nextLine(); 
+        } while (pilihan.equalsIgnoreCase("y")); 
 
         int totalBelanja = hitungTotalBelanja();
         double diskon = hitungDiskon(totalBelanja);
         double totalBayar = totalBelanja - diskon;
 
-        System.out.println("Total item pesanan = " + keranjangBelanja.size());
+        System.out.println("Total item pesanan = " + KERANJANG_BELANJA.size());
         System.out.println("Total yang harus dibayar = " + totalBayar);
 
-        input.close();
+        inputScanner.close();
     }
 
     public static int hitungTotalBelanja() {
         int total = 0;
-        for (int harga : keranjangBelanja) {
-            total += harga;
+        for (int harga : KERANJANG_BELANJA) {
+            total += harga;   
         }
-        return total;
+        return total;     
     }
 
     public static double hitungDiskon(int total) {
